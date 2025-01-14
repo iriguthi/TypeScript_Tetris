@@ -1,0 +1,32 @@
+.main_container {
+  display: flex;
+  justify-content: center;
+}
+
+.side_container {
+  display: flex;
+  text-align: center;
+  margin-left: 10px;
+}
+
+.score {
+  display: flex;
+  flex-direction: column;
+}
+
+.grid {
+  display: grid;
+  grid-template-rows: repeat(20, 20px);
+  grid-template-columns: repeat(10, 20px);
+  gap: 1px;
+}
+
+.cell {
+  width: 20px;
+  height: 20px;
+  background-color: lightgray;
+}
+
+/* .filled {
+  background-color: aqua;
+} */
