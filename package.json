@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "homepage": "https://github.com/iriguthi/TypeScript_Tetris",
+  "homepage": "https://TypeScript_Tetris",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "vite build",
@@ -16,6 +16,6 @@
   "dependencies": {
     "gh-pages": "^6.3.0",
     "typescript": "^5.7.2",
-    "vite": "^5.2.11"
+    "vite": "^6.1.1"
   }
 }
