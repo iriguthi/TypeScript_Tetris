@@ -6,6 +6,7 @@
   "homepage": "https://github.com/iriguthi/TypeScript_Tetris",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "vite build",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
   },
@@ -14,6 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "gh-pages": "^6.3.0",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.2",
+    "vite": "^5.2.11"
   }
 }
