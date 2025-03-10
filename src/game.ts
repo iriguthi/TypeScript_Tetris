@@ -19,43 +19,53 @@ const TETROMINOS: Tetromino[] =[
   {shape: [
     [1, 1],
     [1, 1]
-  ], x: 4, y: 0, color: "yellow" },
+  ], x: 0, y: 0, color: "yellow" },
   // I
   {shape: [
     [1, 1, 1, 1]
-  ], x: 3, y: 0, color: "Cyan" },
+  ], x: 0, y: 0, color: "Cyan" },
   // Z
   {shape: [
     [1, 1, 0],
     [0, 1, 1]
-  ], x: 3, y: 0, color: "red"},
+  ], x: 0, y: 0, color: "red"},
   // S
   {shape: [
     [0, 1, 1],
     [1, 1, 0]
-  ], x: 3, y: 0, color: "green" },
+  ], x: 0, y: 0, color: "green" },
   // T
   {shape: [
     [1, 1, 1],
     [0, 1, 0]
-  ], x: 3, y: 0, color: "purple" },
+  ], x: 0, y: 0, color: "purple" },
   // L
   {shape: [
     [1, 0, 0],
     [1, 1, 1]
-  ], x: 3, y: 0, color: "orange" },
+  ], x: 0, y: 0, color: "orange" },
   // 逆L
   {shape: [
     [0, 0, 1],
     [1, 1, 1]
-  ], x: 3, y: 0, color: "blue" },
+  ], x: 0, y: 0, color: "blue" },
 ];
 
 // テトロミノランダム生成
 const randomTetoromino = (): Tetromino => {
   const random = Math.floor(Math.random() * TETROMINOS.length);
   // console.log(random)
-  return { ...TETROMINOS[random] } as Tetromino;
+  const tetromino = {...TETROMINOS[random]};
+
+  // 存在しない場合はエラー
+  if (!tetromino.shape || tetromino.shape.length === 0) {
+    throw new Error("テトロミノのshapeが不正です");
+  }
+  
+  // 中央で生成
+  const tetrominoWidth = tetromino.shape[0]?.length ?? 1;
+  tetromino.x = Math.floor((grid_width - tetrominoWidth) / 2);
+  return tetromino as Tetromino;
 };
 
 // 現在のテトロミノ

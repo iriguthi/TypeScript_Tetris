@@ -5,11 +5,17 @@
 
 .side_container {
   display: flex;
+  flex-direction: column;
   text-align: center;
   margin-left: 10px;
 }
 
 .score {
+  display: flex;
+  flex-direction: column;
+}
+
+.operation {
   display: flex;
   flex-direction: column;
 }
