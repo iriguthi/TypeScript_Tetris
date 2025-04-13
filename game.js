@@ -46,7 +46,7 @@ const randomTetoromino = () => {
     const random = Math.floor(Math.random() * TETROMINOS.length);
     // console.log(random)
     const tetromino = { ...TETROMINOS[random] };
-    // 存在しない場合はエラー
+    // 存在しない場合はエラー(shapeが空などで来てしまった場合を想定)
     if (!tetromino.shape || tetromino.shape.length === 0) {
         throw new Error("テトロミノのshapeが不正です");
     }
@@ -58,6 +58,34 @@ const randomTetoromino = () => {
 // 現在のテトロミノ
 let currentTetromino = randomTetoromino();
 // console.log("てとろみの",currentTetromino)
+// テトロミノの次弾生成
+let nextTetromino = randomTetoromino();
+function renderNextTetromino() {
+    var _a;
+    const nextContainer = document.getElementById("next_tetromino");
+    // 前回内容をクリアしておく
+    nextContainer.innerHTML = "";
+    // nextTetrominoのshape,colorをそれぞれ代入
+    const { shape, color } = nextTetromino;
+    // テトロミノの列数に合わせてカラム数を設定
+    nextContainer.style.gridTemplateColumns = `repeat(${(_a = shape[0]) === null || _a === void 0 ? void 0 : _a.length}, 20px)`;
+    for (let y = 0; y < shape.length; y++) {
+        for (let x = 0; x < shape[y].length; x++) {
+            const cell = document.createElement("div");
+            cell.style.width = "20px";
+            cell.style.height = "20px";
+            cell.style.boxSizing = "border-box";
+            cell.style.border = "1px solid #ccc";
+            if (shape[y][x] === 1) {
+                cell.style.backgroundColor = color;
+            }
+            else {
+                cell.style.border = "none";
+            }
+            nextContainer.appendChild(cell);
+        }
+    }
+}
 // グリッドリセット
 function clearGrid() {
     grid = Array.from({ length: grid_height }, () => Array(grid_width).fill(0));
@@ -65,6 +93,7 @@ function clearGrid() {
 // 初期化
 function renderGrid() {
     const gameContainer = document.getElementById("tetris_container");
+    // 前回内容をクリアしておく
     gameContainer.innerHTML = "";
     gridReset();
     // 現在のテトロミノの情報を一時的に統合して描画
@@ -159,7 +188,9 @@ function placeTetromino() {
         alert("GAME OVER");
     }
     // 次のテトロミノ生成
-    currentTetromino = randomTetoromino();
+    currentTetromino = nextTetromino;
+    nextTetromino = randomTetoromino();
+    renderNextTetromino();
 }
 // ラインの削除
 let score = 0;
@@ -172,6 +203,8 @@ function clearLine() {
     score += clearLine * 100;
     // console.log(score)
     document.getElementById("score").innerText = `${score}`;
+    // 落下速度更新
+    updateSpeed();
     while (grid.length < grid_height) {
         grid.unshift(Array(grid_width).fill(0));
     }
@@ -193,6 +226,14 @@ function fallTetromino() {
 // テトロミノ時限落下(1秒毎)
 let interval = 1000;
 let gameInterval = setInterval(fallTetromino, interval);
+// 落下速度更新
+function updateSpeed() {
+    // 1000pt毎に落下速度を10%づつ早める
+    interval = Math.max(1000 - Math.floor(score / 1000) * 100, 100);
+    clearInterval(gameInterval);
+    gameInterval = setInterval(fallTetromino, interval);
+    // console.log(interval)
+}
 // テトロミノ移動可否
 function canMove(dx, dy) {
     return currentTetromino.shape.every((row, dyOffset) => {
@@ -324,3 +365,4 @@ function handleKeyPress(event) {
 // 初期描画
 drawTetromino();
 renderGrid();
+renderNextTetromino();
