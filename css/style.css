@@ -6,8 +6,9 @@
 .side_container {
   display: flex;
   flex-direction: column;
-  text-align: center;
+  /* text-align: center; */
   margin-left: 10px;
+  background-color: beige;
 }
 
 .score,
@@ -15,31 +16,42 @@
 .next_container {
   display: flex;
   flex-direction: column;
-  background-color: beige;
+  text-align: center;
+  font-weight: bold;
+}
+
+.operation {
+  margin-top: 100px;
+}
+
+.next_container a{
+  margin-top: 10px;
 }
 
 
 .next_container {
   height: 100px;
+  margin: 0 auto;
 }
 
 .next_tetromino_box {
   display: grid;
   justify-content: center;
-  margin-top: 20px;
+  width: 100px;
+  /* margin-top: 20px; */
 }
 
 .grid {
   display: grid;
   grid-template-rows: repeat(20, 20px);
   grid-template-columns: repeat(10, 20px);
-  gap: 1px;
 }
 
 .cell {
   width: 20px;
   height: 20px;
   background-color: lightgray;
+  border: 1px solid white;
 }
 
 /* .filled {
